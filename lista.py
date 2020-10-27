@@ -45,17 +45,17 @@ def editar(lista, numero, antigo, novo):
 
 def inserir(dado, lista, x):
     novono = No(dado, x)
-    if (lista.prox == None):
+    if lista.prox is None:
         lista.prox = novono
         return
 
     atual = lista.prox
     previous = None
 
-    while (atual and atual.vote_average <= novono.vote_average):
+    while atual and atual.vote_average <= novono.vote_average:
         previous = atual
         atual = atual.prox
-    if (previous == None):
+    if previous is None:
         novono.prox = lista.prox
         lista.prox = novono
     else:
@@ -69,7 +69,7 @@ def inserir(dado, lista, x):
 def delete(lista, numero):
     listateste = lista.prox
     previous = None
-    if (numero == 0):
+    if(numero == 0):
         lista.prox = lista.prox.prox
         return
     for i in range(numero):
@@ -82,7 +82,7 @@ def delete(lista, numero):
 def imprimirlista(lista,x):
     imprimirlist = lista.prox
     for i in range(x):
-        print("filme =", i + 1)
+        print("Filme =", i)
         print(imprimirlist.budget)
         print(imprimirlist.genres)
         print(imprimirlist.homepage)
@@ -109,22 +109,24 @@ def imprimirlista(lista,x):
 
 
 lista1 = Cabeca()
-# print(arquivo.columns)
+
 for i in range(100):
     x = random.randint(0, len(arquivo['budget']) - 1)
     inserir(arquivo, lista1, x)
-deleditar = input("lanse a braba")
-cont=0
-if(int(deleditar) == 1):
-    vrau = input("digite o numero")
-    vrau2 = input("digite a categoria")
-    vrau3 = input("digite o novo")
-    editar(lista1, int(vrau), vrau2, vrau3)
-if(int(deleditar) == 2):
-    num = input("digita meu bom")
-    delete(lista1, int(num))
-    cont+=1
+deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
+cont = 0
+while int(deleditar) != 0:
+    if int(deleditar) == 1:
+        num = input("Digite o número: ")
+        cat = input("Digite a Categoria: ")
+        new = input("Digite o Novo: ")
+        editar(lista1, int(num), cat, new)
+        deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
+    if int(deleditar) == 2:
+        num = input("Digite o número que deseja deletar: ")
+        delete(lista1, int(num))
+        cont += 1
+        deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
 
 
-
-imprimirlista(lista1,100-cont)
+imprimirlista(lista1, 100-cont)
