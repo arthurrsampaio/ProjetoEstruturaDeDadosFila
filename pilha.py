@@ -6,6 +6,7 @@ arquivo = pandas.read_csv("tmdb_5000_movies.csv")
 
 class No:
     def __init__(self, arquivo, x):
+        #criando um no
         self.budget = arquivo['budget'][x]
         self.genres = arquivo['genres'][x]
         self.homepage = arquivo['homepage'][x]
@@ -36,11 +37,13 @@ class top:
 
 
 def editar(pilha, antigo, novo):
+    #funcao que edita o topo da pilha
 
     setattr(pilha.prox, antigo, novo)
 
 
 def push(dado, pilha, x):
+    #funcao que insere no topo da pilha
     novono = No(dado, x)
     novono.prox = pilha.prox
     pilha.prox = novono
@@ -49,6 +52,7 @@ def push(dado, pilha, x):
 # 1 5 8 9
 
 def pop(pilha):
+    #funcao que imprime e retorna o primeiro no
     imprimirpilha(pilha, 1)
     x=pilha.prox
     aux=pilha.prox
@@ -58,9 +62,11 @@ def pop(pilha):
 
 
 def peek(pilha):
+    #funcao para visualizar o topo da pilha
     imprimirpilha(pilha,1)
 
 def imprimirpilha(pilha,x):
+    #funcao que imprime a pilha
     imprimirpilha = pilha.prox
     for i in range(x):
         print("filme =", i + 1)
@@ -92,8 +98,10 @@ def imprimirpilha(pilha,x):
 pilha = top()
 
 for i in range(100):
+    #inserir 100 filmes aleatorios
     x = random.randint(0, len(arquivo['budget']) - 1)
     push(arquivo, pilha, x)
+    
 choice=input("pop=1  peek=2 editar=3 imprimir=01 ")
 cont=0
 while(int(choice)!=0):
