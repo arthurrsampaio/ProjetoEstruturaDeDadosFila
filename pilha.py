@@ -62,8 +62,9 @@ def pop(pilha):
 
 
 def peek(pilha):
-    #funcao para visualizar o topo da pilha
+    #funcao para visualizar o topo da pilha e retornar o primeiro elemento
     imprimirpilha(pilha,1)
+    return pilha.prox
 
 def imprimirpilha(pilha,x):
     #funcao que imprime a pilha
@@ -110,7 +111,7 @@ while(int(choice)!=0):
         choice = input("pop=1  peek=2 editar=3 imprimir=0 ")
         cont+=1
     if choice == '2':
-        print(peek(pilha))
+        y=(peek(pilha))
         choice = input("pop=1  peek=2 editar=3 imprimir=0 ")
     if choice == '3':
         antigo=input("digite o antigo")
