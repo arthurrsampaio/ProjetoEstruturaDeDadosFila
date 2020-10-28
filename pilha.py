@@ -52,7 +52,7 @@ def push(dado, pilha, x):
 # 1 5 8 9
 
 def pop(pilha):
-    #funcao que imprime e retorna o primeiro no
+    #funcao que imprime, retorna e deleta o primeiro no
     imprimirpilha(pilha, 1)
     x=pilha.prox
     aux=pilha.prox
