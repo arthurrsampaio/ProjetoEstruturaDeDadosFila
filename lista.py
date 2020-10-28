@@ -6,6 +6,7 @@ arquivo = pandas.read_csv("tmdb_5000_movies.csv")
 
 class No:
     def __init__(self, arquivo, x):
+        #criando no definindo suas variaveis 
         self.budget = arquivo['budget'][x]
         self.genres = arquivo['genres'][x]
         self.homepage = arquivo['homepage'][x]
@@ -36,6 +37,7 @@ class Cabeca:
 
 
 def editar(lista, numero, antigo, novo):
+    #funcao que edita um no recebendo sua posicao e o atributo antigo e novo
     listateste = lista.prox
     for i in range(numero):
         listateste = listateste.prox
@@ -44,6 +46,7 @@ def editar(lista, numero, antigo, novo):
 
 
 def inserir(dado, lista, x):
+    #funcao que insere o no de maneira ordenada baseado na media de votos
     novono = No(dado, x)
     if lista.prox is None:
         lista.prox = novono
@@ -64,9 +67,9 @@ def inserir(dado, lista, x):
         previous.prox = novono
 
 
-# 1 5 8 9
 
 def delete(lista, numero):
+    #funcao para deletar um no da lista que recebe sua posição
     listateste = lista.prox
     previous = None
     if(numero == 0):
@@ -80,6 +83,7 @@ def delete(lista, numero):
 
 
 def imprimirlista(lista,x):
+    #funcaoqueimprimealista
     imprimirlist = lista.prox
     for i in range(x):
         print("Filme =", i)
@@ -111,8 +115,10 @@ def imprimirlista(lista,x):
 lista1 = Cabeca()
 
 for i in range(100):
+    #inserir 100 filmes aleatorios
     x = random.randint(0, len(arquivo['budget']) - 1)
     inserir(arquivo, lista1, x)
+    
 deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
 cont = 0
 while int(deleditar) != 0:
@@ -122,6 +128,7 @@ while int(deleditar) != 0:
         new = input("Digite o Novo: ")
         editar(lista1, int(num), cat, new)
         deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
+        
     if int(deleditar) == 2:
         num = input("Digite o número que deseja deletar: ")
         delete(lista1, int(num))
