@@ -103,21 +103,19 @@ for i in range(100):
     x = random.randint(0, len(arquivo['budget']) - 1)
     push(arquivo, pilha, x)
     
-choice=input("pop=1  peek=2 editar=3 imprimir=01 ")
+choice=input("pop=1  peek=2 editar=3 imprimir=4 sair=0 ")
 cont=0
 while(int(choice)!=0):
     if choice=='1':
         x=(pop(pilha))
-        choice = input("pop=1  peek=2 editar=3 imprimir=0 ")
         cont+=1
     if choice == '2':
         y=(peek(pilha))
-        choice = input("pop=1  peek=2 editar=3 imprimir=0 ")
     if choice == '3':
         antigo=input("digite o antigo")
         novo=input("digite o antigo")
-        editar(pilha,antigo,novo)
-        choice = input("pop=1  peek=2 editar=3 imprimir=0 ")
-
-
-imprimirpilha(pilha, 100-cont)
+        editar(pilha,antigo,novo)        
+    if choice=='4':
+        imprimirpilha(pilha, 100-cont)
+        
+    choice=input("pop=1  peek=2 editar=3 imprimir=4 sair=0 ")
