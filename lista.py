@@ -59,6 +59,7 @@ def inserir(dado, lista, x):
         previous = atual
         atual = atual.prox
     if previous is None:
+        #é menor que o primeiro entao insere na cabeca
         novono.prox = lista.prox
         lista.prox = novono
     else:
@@ -119,7 +120,7 @@ for i in range(100):
     x = random.randint(0, len(arquivo['budget']) - 1)
     inserir(arquivo, lista1, x)
     
-deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
+deleditar = input("Digite sua opção(0=sair, 1 = Editar, 2 = Deletar,3 = Imprimir) ")
 cont = 0
 while int(deleditar) != 0:
     if int(deleditar) == 1:
@@ -127,13 +128,14 @@ while int(deleditar) != 0:
         cat = input("Digite a Categoria: ")
         new = input("Digite o Novo: ")
         editar(lista1, int(num), cat, new)
-        deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
         
-    if int(deleditar) == 2:
+    elif int(deleditar) == 2:
         num = input("Digite o número que deseja deletar: ")
         delete(lista1, int(num))
         cont += 1
-        deleditar = input("Digite sua opção(0 = Imprimir, 1 = Editar, 2 = Deletar) ")
 
-
-imprimirlista(lista1, 100-cont)
+        
+    elif int(deleditar) == 3:
+        imprimirlista(lista1, 100-cont)
+        
+    deleditar = input("Digite sua opção(0=sair, 1 = Editar, 2 = Deletar,3 = Imprimir) ")
