@@ -6,7 +6,7 @@ arquivo = pandas.read_csv("tmdb_5000_movies.csv")
 
 class No:
     def __init__(self, arquivo, x):
-        #criando um no
+        # criando um no
         self.budget = arquivo['budget'][x]
         self.genres = arquivo['genres'][x]
         self.homepage = arquivo['homepage'][x]
@@ -37,14 +37,21 @@ class top:
 
 
 def editar(pilha, antigo, novo):
-    #funcao que edita o topo da pilha
-
+    # funcao que edita o topo da pilha
     setattr(pilha.prox, antigo, novo)
 
 
 def push(dado, pilha, x):
-    #funcao que insere no topo da pilha
+    # funcao que insere no topo da pilha
     novono = No(dado, x)
+    pilhateste = pilha.prox
+    if(pilha.prox!=None):
+
+        while(pilhateste and pilhateste.id != novono.id):
+            pilhateste=pilhateste.prox
+
+    if(pilhateste and pilhateste.id==novono.id):
+        return 1
     novono.prox = pilha.prox
     pilha.prox = novono
 
@@ -52,22 +59,23 @@ def push(dado, pilha, x):
 # 1 5 8 9
 
 def pop(pilha):
-    #funcao que imprime, retorna e deleta o primeiro no
+    # funcao que imprime, retorna e deleta o primeiro no
     imprimirpilha(pilha, 1)
-    x=pilha.prox
-    aux=pilha.prox
-    pilha.prox=aux.prox
-    aux.prox=None
+    x = pilha.prox
+    aux = pilha.prox
+    pilha.prox = aux.prox
+    aux.prox = None
     return x
 
 
 def peek(pilha):
-    #funcao para visualizar o topo da pilha e retornar o primeiro elemento
-    imprimirpilha(pilha,1)
+    # funcao para visualizar o topo da pilha e retornar o primeiro elemento
+    imprimirpilha(pilha, 1)
     return pilha.prox
 
-def imprimirpilha(pilha,x):
-    #funcao que imprime a pilha
+
+def imprimirpilha(pilha, x):
+    # funcao que imprime a pilha
     imprimirpilha = pilha.prox
     for i in range(x):
         print("filme =", i + 1)
@@ -97,25 +105,28 @@ def imprimirpilha(pilha,x):
 
 
 pilha = top()
-
-for i in range(100):
-    #inserir 100 filmes aleatorios
+cont = 0
+contpilha = 0
+while (contpilha!=100):
+    # inserir 100 filmes aleatorios
     x = random.randint(0, len(arquivo['budget']) - 1)
-    push(arquivo, pilha, x)
-    
-choice=input("pop=1  peek=2 editar=3 imprimir=4 sair=0 ")
-cont=0
-while(int(choice)!=0):
-    if choice=='1':
-        x=(pop(pilha))
-        cont+=1
+    if push(arquivo, pilha, x) !=1:
+        contpilha+=1
+
+
+
+choice = input("pop=1  peek=2 editar=3 imprimir=4 sair=0 ")
+while (int(choice) != 0):
+    if choice == '1':
+        x = (pop(pilha))
+        cont += 1
     if choice == '2':
-        y=(peek(pilha))
+        y = (peek(pilha))
     if choice == '3':
-        antigo=input("digite o antigo")
-        novo=input("digite o antigo")
-        editar(pilha,antigo,novo)        
-    if choice=='4':
-        imprimirpilha(pilha, 100-cont)
-        
-    choice=input("pop=1  peek=2 editar=3 imprimir=4 sair=0 ")
+        antigo = input("digite o antigo")
+        novo = input("digite o novo")
+        editar(pilha, antigo, novo)
+    if choice == '4':
+        imprimirpilha(pilha, 100 - cont)
+
+    choice = input("pop=1  peek=2 editar=3 imprimir=4 sair=0 ")
