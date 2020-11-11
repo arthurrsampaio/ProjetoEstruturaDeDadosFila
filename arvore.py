@@ -32,6 +32,8 @@ class No:
         self.right = None
 
 
+def deletar(arvore,id):
+    previous=buscarprev(arvore,id)
 
 def editar(arvore, antigo, novo,id):
     nozinho=(buscar(arvore,id))
@@ -53,9 +55,22 @@ def buscar(arvore,id):
 
             return arvore
         if int(arvore.id)>int(id) and arvore.id!=id:
+            prev=arvore
             arvore=arvore.left
         elif int(arvore.id)!=id:
+            prev=arvore
+            arvore=arvore.right
+def buscarprev(arvore,id,prev):
 
+    while(arvore):
+        if int(arvore.id)==int(id):
+
+            return prev
+        if int(arvore.id)>int(id) and arvore.id!=id:
+            prev=arvore
+            arvore=arvore.left
+        elif int(arvore.id)!=id:
+            prev=arvore
             arvore=arvore.right
 
 def buscar2(arvore2,popularity):
@@ -85,11 +100,11 @@ def printarvore(arvore):
 
     if(arvore!=None):
         printarvore(arvore.left)
-        print(arvore.budget)
+        """  print(arvore.budget)
         print(arvore.genres)
-        print(arvore.homepage)
-        print(arvore.id)
-        print(arvore.keywords)
+        print(arvore.homepage)"""
+        #print(arvore.id)
+        """ print(arvore.keywords)
         print(arvore.original_language)
         print(arvore.original_title)
         print(arvore.overview)
@@ -103,7 +118,7 @@ def printarvore(arvore):
         print(arvore.status)
         print(arvore.tagline)
         print(arvore.title)
-        print(arvore.vote_average)
+        print(arvore.vote_average)"""
         print(arvore.vote_count)
         print(' ')
 
@@ -118,12 +133,14 @@ def contarno(arvore):
 def inserir(arvore, arquivo, x):
 
     novono = No(arquivo, x)
+
     if(arvore==None):
         return novono
     if(novono.id<arvore.id and arvore.id != novono.id):
         arvore.left=inserir(arvore.left,arquivo,x)
     elif arvore.id != novono.id :
         arvore.right = inserir(arvore.right, arquivo, x)
+
     return (arvore)
 
 
@@ -148,6 +165,157 @@ def inserir3(arvore3, arquivo, x):
         arvore3.right = inserir3(arvore3.right, arquivo, x)
     return (arvore3)
 
+def removeno (arvore,id):
+    pai=None
+    p=None
+    atual=arvore
+    q=None
+    while(atual and int(atual.id) != int(id)):
+        pai=atual
+        if(int(atual.id)>int(id)):
+            atual=atual.left
+        else:
+            atual = atual.right
+    ata=atual.id
+    if (atual == None):
+        return arvore
+
+    if(atual.left ==None or atual.right==None):
+        print ("caiu")
+        if(not atual.left):
+            q=atual.right
+        else:
+            q=atual.left
+
+
+
+    else:
+        p=atual
+        q=atual.left
+        while(q.right):
+            p=q
+            q=q.right
+
+
+        if(p!=atual):
+            p.right = q.left
+            q.left = atual.left
+        q=atual.right
+
+    if (not pai):
+        atual.right=None
+        atual.left=None
+        return (q)
+
+    if(int(id) < int(pai.id)):
+        pai.left=q
+    else:
+        pai.right=q
+
+    atual.right=None
+    atual.left=None
+    return arvore
+def removeno2 (arvore,popularity):
+    pai=None
+    p=None
+    atual=arvore
+    q=None
+    while(atual and float(atual.popularity) != float(popularity)):
+        pai=atual
+        if(float(atual.popularity)>float(popularity)):
+            atual=atual.left
+        else:
+            atual = atual.right
+
+    if (atual == None):
+        return arvore
+
+    if(atual.left ==None or atual.right==None):
+        print ("caiu")
+        if(not atual.left):
+            q=atual.right
+        else:
+            q=atual.left
+
+
+
+    else:
+        p=atual
+        q=atual.left
+        while(q.right):
+            p=q
+            q=q.right
+
+
+        if(p!=atual):
+            p.right = q.left
+            q.left = atual.left
+        q=atual.right
+
+    if (not pai):
+        atual.right=None
+        atual.left=None
+        return (q)
+
+    if(int(id) < int(pai.id)):
+        pai.left=q
+    else:
+        pai.right=q
+
+    atual.right=None
+    atual.left=None
+    return arvore
+
+def removeno3 (arvore,vote_count):
+    pai=None
+    p=None
+    atual=arvore
+    q=None
+    while(atual and int(atual.vote_count) != int(vote_count)):
+        pai=atual
+        if(int(atual.vote_count)>int(vote_count)):
+            atual=atual.left
+        else:
+            atual = atual.right
+
+    if (atual == None):
+        return arvore
+
+    if(atual.left ==None or atual.right==None):
+        
+        if(not atual.left):
+            q=atual.right
+        else:
+            q=atual.left
+
+
+
+    else:
+        p=atual
+        q=atual.left
+        while(q.right):
+            p=q
+            q=q.right
+
+
+        if(p!=atual):
+            p.right = q.left
+            q.left = atual.left
+        q=atual.right
+
+    if (not pai):
+        atual.right=None
+        atual.left=None
+        return (q)
+
+    if(int(vote_count) < int(pai.vote_count)):
+        pai.left=q
+    else:
+        pai.right=q
+
+    atual.right=None
+    atual.left=None
+    return arvore
 arvore = None
 arvore2 = None
 arvore3 = None
@@ -178,7 +346,7 @@ if(choice=='1'):
             ide=input("digite a ser substituido")
             editar(arvore,categoria,novo,ide)
         if choice == '3':
-            pass
+            removeno(arvore,input("digite o id"))
         if choice == '4':
             pass
 
@@ -195,7 +363,7 @@ if(choice=='2'):
             budget = input("digite a ser substituido")
             editar2(arvore2, categoria, novo, budget)
         if choice == '3':
-            pass
+            removeno2(arvore,input("digite o populairty"))
         if choice == '4':
             pass
 
@@ -212,7 +380,7 @@ if(choice=='3'):
             ide = input("digite a ser substituido")
             editar3(arvore3, categoria, novo, ide)
         if choice == '3':
-            pass
+            removeno3(arvore,input("digite o vote_count"))
         if choice == '4':
             pass
 
