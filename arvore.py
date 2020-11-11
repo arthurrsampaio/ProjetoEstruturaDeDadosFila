@@ -103,12 +103,15 @@ def printarvore(arvore):
         """  print(arvore.budget)
         print(arvore.genres)
         print(arvore.homepage)"""
-        #print(arvore.id)
+        print("id=")
+        print(arvore.id)
         """ print(arvore.keywords)
         print(arvore.original_language)
         print(arvore.original_title)
-        print(arvore.overview)
+        print(arvore.overview)"""
+        print("popularity=")
         print(arvore.popularity)
+        """
         print(arvore.production_companies)
         print(arvore.production_countries)
         print(arvore.release_date)
@@ -119,6 +122,7 @@ def printarvore(arvore):
         print(arvore.tagline)
         print(arvore.title)
         print(arvore.vote_average)"""
+        print("vote count=")
         print(arvore.vote_count)
         print(' ')
 
@@ -257,7 +261,7 @@ def removeno2 (arvore,popularity):
         atual.left=None
         return (q)
 
-    if(int(id) < int(pai.id)):
+    if(float(popularity) < float(pai.popularity)):
         pai.left=q
     else:
         pai.right=q
@@ -363,7 +367,8 @@ if(choice=='2'):
             budget = input("digite a ser substituido")
             editar2(arvore2, categoria, novo, budget)
         if choice == '3':
-            removeno2(arvore,input("digite o populairty"))
+            print("foi")
+            removeno2(arvore2,input("digite o populairty"))
         if choice == '4':
             pass
 
@@ -380,7 +385,7 @@ if(choice=='3'):
             ide = input("digite a ser substituido")
             editar3(arvore3, categoria, novo, ide)
         if choice == '3':
-            removeno3(arvore,input("digite o vote_count"))
+            removeno3(arvore3,input("digite o vote_count"))
         if choice == '4':
             pass
 
