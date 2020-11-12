@@ -59,6 +59,7 @@ def popid (fila):
     aux=fila.inicio
     fila.inicio = fila.inicio.prox
     aux.prox=None
+    fila.tamanho-=1
     return aux
 
 def printqueue(fila,x):
@@ -111,6 +112,6 @@ while (int(choice) != 0):
         novo = input("digite o novo")
         editar(fila,antigo,novo)
     if choice == '3':
-        printqueue(fila,100)
+        printqueue(fila,fila,tamanho)
 
     choice = input("pop=1  editar=2 imprimir=3 sair=0 ")
