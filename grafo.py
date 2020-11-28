@@ -10,7 +10,14 @@ class Vertice:
         self.nvizinhos=0
         self.dado=None
 
-
+class initD:
+    def __init__(self,v):
+        self.d=[]
+        self.p=[]
+        for i in range(100):
+            self.p.append(-1)
+            self.d.append(50000)
+        self.d[v]=0
 class Grafo:
 
     def __init__(self,nvert):
@@ -37,17 +44,28 @@ def printargf(grafo):
         for i in range(fk[j].nvizinhos):
             print(fk[j].cabeca.vertice)
             fk[j].cabeca=fk[j].cabeca.prox
+def relaxa(grafo,u,v):
+    listas=initD(u)
+    ad=grafo.verticies[u].cabeca
+    while (ad and ad.vertice!=v):
+        ad=ad.prox
+    if(ad):
+        if(listas.d[v] > listas.d[u]+ ad.peso):
+            listas.d[v] = listas.d[u]+ad.peso
+            listas.p[v] = u
 
-
+def dijsktra(grafo,s):
+    aberto=[]
+    for i in range
 
 
 grafo=Grafo(100)
 criarvertice(grafo)
-criararesta(4,1,grafo,1)
+criararesta(0,1,grafo,1)
 criararesta(0,2,grafo,1)
 criararesta(0,3,grafo,1)
-criararesta(0,4,grafo,1)
-criararesta(0,5,grafo,1)
-
-printargf(grafo)
-#printargf(grafo)
+criararesta(1,4,grafo,1)
+criararesta(1,5,grafo,1)
+criararesta(1,6,grafo,1)
+criararesta(2,7,grafo,1)
+relaxa(grafo,0,1)
