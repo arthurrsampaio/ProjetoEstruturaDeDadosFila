@@ -1,38 +1,53 @@
-from copy import copy
-class vizinhos:
-    def __init__(self):
-        self.dado=None
-        self.peso=None
+class Adj:
+    def __init__(self,v,peso):
+        self.vertice=v
+        self.peso=peso
         self.prox=None
+
 class Vertice:
-    def __init__(self,vert):
-        self.vert=vert
-        self.vizinhos=None
-        self.prox=None
-class Grafo:
     def __init__(self):
-        self.listavert=None
+        self.cabeca = None
+        self.nvizinhos=0
+        self.dado=None
 
-def addvert(grafo,vert):
-    if(grafo.listavert==None):
-        grafo.listavert=Vertice(vert)
-    else:
-        fk=grafo.listavert
-        ant=fk
-        while(fk):
-            ant=fk
-            fk=fk.prox
-        ant.prox=Vertice(vert)
 
-def printgf(grafo):
-    fake=grafo
-    while(fake.listavert):
-        print(fake.listavert.vert)
-        fake.listavert=fake.listavert.prox
+class Grafo:
 
-grafo=Grafo()
-addvert(grafo,1)
-addvert(grafo,2)
-addvert(grafo,3)
-addvert(grafo,4)
-printgf(grafo)
+    def __init__(self,nvert):
+        self.nvert=nvert
+        self.arestas=0
+        self.verticies=[]
+
+def criarvertice(grafo):
+    for i in range(100):
+        grafo.verticies.append(Vertice())
+
+def criararesta(vi,vf,grafo,peso):
+    novo=Adj(vf,peso)
+    grafo.verticies[vi].nvizinhos+=1
+    novo.prox=grafo.verticies[vi].cabeca
+    grafo.verticies[vi].cabeca=novo
+    grafo.arestas+=1
+def printargf(grafo):
+
+    for i in range (5):
+        print("vertice=",i)
+        j=i
+        fk=grafo.verticies
+        for i in range(fk[j].nvizinhos):
+            print(fk[j].cabeca.vertice)
+            fk[j].cabeca=fk[j].cabeca.prox
+
+
+
+
+grafo=Grafo(100)
+criarvertice(grafo)
+criararesta(4,1,grafo,1)
+criararesta(0,2,grafo,1)
+criararesta(0,3,grafo,1)
+criararesta(0,4,grafo,1)
+criararesta(0,5,grafo,1)
+
+printargf(grafo)
+#printargf(grafo)
