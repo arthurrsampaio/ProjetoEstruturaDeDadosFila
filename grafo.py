@@ -1,6 +1,6 @@
 import random
 import pandas
-
+import copy
 arquivo=pandas.read_csv("Tweets.csv")
 
 class Adj:
@@ -46,11 +46,12 @@ class Grafo:
         self.verticies=[]
 
 def criarvertice(grafo):
-    for i in range(100):
+    for i in range(grafo.nvert):
         x=random.randint(0,len(arquivo))
         grafo.verticies.append(Vertice(arquivo,x,i))
 
 def criararesta(vi,vf,grafo,peso):
+    fk=grafo.verticies
     novo=Adj(vf,peso)
     grafo.verticies[vi].nvizinhos+=1
     novo.prox=grafo.verticies[vi].cabeca
@@ -58,11 +59,14 @@ def criararesta(vi,vf,grafo,peso):
     grafo.arestas+=1
 def printargf(grafo):
 
-    for i in range (100):
+    for i in range (grafo.nvert):
         print("vertice=",i)
-        j=i
-        fk=grafo.verticies
-        print(grafo.verticies[i].tweetId)
+        fk=grafo.verticies[i]
+        fk2=grafo.verticies[i].cabeca
+        
+        print(fk.tweetId)
+       
+
 
 def relaxa(grafo,listas,u,v):
     ad=grafo.verticies[u].cabeca
@@ -73,7 +77,7 @@ def relaxa(grafo,listas,u,v):
             listas.d[v] = listas.d[u]+ad.peso
             listas.p[v] = u
 
-def dijsktra(grafo,vertice):
+def dijsktra(grafo,vertice,final):
     aberto=[]
     listas=initD(vertice)
     for i in range(grafo.nvert):
@@ -85,8 +89,8 @@ def dijsktra(grafo,vertice):
         while(ad):
             relaxa(grafo,listas,u,ad.vertice)
             ad=ad.prox
-    for i in range(grafo.nvert):
-        print(listas.d[i])
+    print(listas.d[final])
+
 def isopen(grafo,aberto):
     for i in range(grafo.nvert):
         if(aberto[i]==1):
@@ -109,18 +113,32 @@ def smallerdist(grafo,aberto,listas):
 
     return menor
 
+def buscar(grafo,id):
+    for i in range(grafo.nvert):
+        if(grafo.verticies[i].tweetId==int(id)):
+            return i
 
 grafo=Grafo(10)
 criarvertice(grafo)
-for i in range(100000):
-    peso=int(float(grafo.verticies[i%].airline_sentiment_confidence) * 10)
-    conecta=str(grafo.verticies[i%10].tweetId)
-    if(i!=9):
-        j=i+1
-    else:
-        j=8
-    criararesta(i%10,int(conecta[-2:]),grafo,peso)
+criararesta(0,1,grafo,2)
+criararesta(1,4,grafo,2)
+criararesta(1,3,grafo,2)
+criararesta(2,3,grafo,2)
+criararesta(3,4,grafo,2)
+criararesta(4,5,grafo,2)
+criararesta(5,6,grafo,2)
+criararesta(6,7,grafo,2)
+criararesta(7,8,grafo,2)
+criararesta(8,2,grafo,2)
+criararesta(8,9,grafo,2)
+criararesta(9,8,grafo,2)
+deleditar=input("1=print,2=djiktra,0=sair: ")
 
+while(int(deleditar)!=0):
+    if(int(deleditar)==1):
+        printargf(grafo)
+    if(int(deleditar)==2):
 
-dijsktra(grafo,0)
-#printargf(grafo)
+        dijsktra(grafo,buscar(grafo,input("coloque o id")),buscar(grafo,input("destino")))
+    deleditar=input("1=print,2=djiktra,0=sair: ")
+
