@@ -1,3 +1,5 @@
+import random
+import pandas
 class Adj:
     def __init__(self,v,peso):
         self.vertice=v
@@ -44,8 +46,7 @@ def printargf(grafo):
         for i in range(fk[j].nvizinhos):
             print(fk[j].cabeca.vertice)
             fk[j].cabeca=fk[j].cabeca.prox
-def relaxa(grafo,u,v):
-    listas=initD(u)
+def relaxa(grafo,listas,u,v):
     ad=grafo.verticies[u].cabeca
     while (ad and ad.vertice!=v):
         ad=ad.prox
@@ -54,18 +55,52 @@ def relaxa(grafo,u,v):
             listas.d[v] = listas.d[u]+ad.peso
             listas.p[v] = u
 
-def dijsktra(grafo,s):
+def dijsktra(grafo,vertice):
     aberto=[]
-    for i in range
+    listas=initD(vertice)
+    for i in range(grafo.nvert):
+        aberto.append(1)
+    while(isopen(grafo,aberto)):
+        u=smallerdist(grafo,aberto,listas)
+        aberto[u]=0
+        ad=grafo.verticies[u].cabeca
+        while(ad):
+            relaxa(grafo,listas,u,ad.vertice)
+            ad=ad.prox
+    for i in range(grafo.nvert):
+        print(listas.d[i])
+def isopen(grafo,aberto):
+    for i in range(grafo.nvert):
+        if(aberto[i]==1):
+            return 1
+    return 0
+
+def smallerdist(grafo,aberto,listas):
+
+    for i in range(grafo.nvert):
+        if(aberto[i]):
+            break
+    if(i==grafo.nvert):
+        return -1
+    menor=i
+    j=menor +1
+    for j in range(grafo.nvert):
+        if(aberto[j] and listas.d[menor]>listas.d[i]):
+            menor=i
 
 
-grafo=Grafo(100)
+    return menor
+
+
+grafo=Grafo(6)
 criarvertice(grafo)
-criararesta(0,1,grafo,1)
-criararesta(0,2,grafo,1)
-criararesta(0,3,grafo,1)
-criararesta(1,4,grafo,1)
-criararesta(1,5,grafo,1)
-criararesta(1,6,grafo,1)
-criararesta(2,7,grafo,1)
-relaxa(grafo,0,1)
+criararesta(0,1,grafo,10)
+criararesta(0,2,grafo,5)
+criararesta(2,1,grafo,3)
+criararesta(1,3,grafo,1)
+criararesta(2,3,grafo,8)
+criararesta(2,4,grafo,2)
+criararesta(4,5,grafo,6)
+criararesta(3,5,grafo,4)
+criararesta(3,4,grafo,4)
+dijsktra(grafo,0)
