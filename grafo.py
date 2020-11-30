@@ -76,6 +76,18 @@ def relaxa(grafo,listas,u,v):
         if(listas.d[v] > listas.d[u]+ ad.peso):
             listas.d[v] = listas.d[u]+ad.peso
             listas.p[v] = u
+def caminho(grafo,inicial,final,listas):
+    newlist=[]
+    i=final
+    
+    while(i!=inicial):
+        newlist.append(i)
+        i=listas.p[i]
+        
+    newlist.append(inicial)    
+    newlist.reverse()
+    
+    print(newlist)
 
 def dijsktra(grafo,vertice,final):
     aberto=[]
@@ -90,6 +102,7 @@ def dijsktra(grafo,vertice,final):
             relaxa(grafo,listas,u,ad.vertice)
             ad=ad.prox
     print(listas.d[final])
+    caminho(grafo,vertice,final,listas)
 
 def isopen(grafo,aberto):
     for i in range(grafo.nvert):
