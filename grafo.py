@@ -1,3 +1,8 @@
+import random
+import pandas
+
+arquivo=pandas.read_csv("Tweets.csv")
+
 class Adj:
     def __init__(self,v,peso):
         self.vertice=v
@@ -5,10 +10,25 @@ class Adj:
         self.prox=None
 
 class Vertice:
-    def __init__(self):
+    def __init__(self,arquivo,x,i):
+
         self.cabeca = None
         self.nvizinhos=0
-        self.dado=None
+        self.vertice=i
+        self.tweetId=arquivo['tweet_id'][x]
+        self.airline_sentiment=arquivo['airline_sentiment'][x]
+        self.airline_sentiment_confidence=arquivo['airline_sentiment_confidence'][x]
+        self.negativereason=arquivo['negativereason'][x]
+        self.negativereason_confidence=arquivo['negativereason_confidence'][x]
+        self.airline=arquivo['airline'][x]
+        self.airline_sentiment_gold=arquivo['airline_sentiment_gold'][x]
+        self.name=arquivo['name'][x]
+        self.negativereason_gold=arquivo['negativereason_gold'][x]
+        self.retweet_count=arquivo['retweet_count'][x]
+        self.tweet_coord=arquivo['tweet_coord'][x]
+        self.tweet_created=arquivo['tweet_created'][x]
+        self.tweet_location=arquivo['tweet_location'][x]
+        self.user_timezone=arquivo['user_timezone'][x]
 
 class initD:
     def __init__(self,v):
@@ -27,7 +47,8 @@ class Grafo:
 
 def criarvertice(grafo):
     for i in range(100):
-        grafo.verticies.append(Vertice())
+        x=random.randint(0,len(arquivo))
+        grafo.verticies.append(Vertice(arquivo,x,i))
 
 def criararesta(vi,vf,grafo,peso):
     novo=Adj(vf,peso)
@@ -37,13 +58,12 @@ def criararesta(vi,vf,grafo,peso):
     grafo.arestas+=1
 def printargf(grafo):
 
-    for i in range (5):
+    for i in range (100):
         print("vertice=",i)
         j=i
         fk=grafo.verticies
-        for i in range(fk[j].nvizinhos):
-            print(fk[j].cabeca.vertice)
-            fk[j].cabeca=fk[j].cabeca.prox
+        print(grafo.verticies[i].tweetId)
+
 def relaxa(grafo,listas,u,v):
     ad=grafo.verticies[u].cabeca
     while (ad and ad.vertice!=v):
@@ -74,29 +94,33 @@ def isopen(grafo,aberto):
     return 0
 
 def smallerdist(grafo,aberto,listas):
+
     for i in range(grafo.nvert):
         if(aberto[i]):
             break
-        if(i==grafo.nvert):
-            return -1
-        menor =1
-        j=menor +1
-        for j in range(grafo.nvert):
-            if(aberto[j] and listas.d[menor]>listas.d[i]):
-                menor=i
-        print(menor)
-        return menor
+    if(i==grafo.nvert):
+        return -1
+    menor=i
+    j=menor +1
+    for j in range(grafo.nvert):
+        if(aberto[j] and listas.d[menor]>listas.d[i]):
+            menor=i
 
 
-grafo=Grafo(6)
+    return menor
+
+
+grafo=Grafo(10)
 criarvertice(grafo)
-criararesta(0,1,grafo,10)
-criararesta(0,2,grafo,5)
-criararesta(2,1,grafo,3)
-criararesta(1,3,grafo,1)
-criararesta(2,3,grafo,8)
-criararesta(2,4,grafo,2)
-criararesta(4,5,grafo,6)
-criararesta(3,5,grafo,4)
-criararesta(3,4,grafo,4)
+for i in range(100000):
+    peso=int(float(grafo.verticies[i%].airline_sentiment_confidence) * 10)
+    conecta=str(grafo.verticies[i%10].tweetId)
+    if(i!=9):
+        j=i+1
+    else:
+        j=8
+    criararesta(i%10,int(conecta[-2:]),grafo,peso)
+
+
 dijsktra(grafo,0)
+#printargf(grafo)
