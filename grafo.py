@@ -117,9 +117,10 @@ def dijsktra(grafo, vertice, final):
             ad = ad.prox
     if(int(listas.d[final])!=50000):
         print(listas.d[final])
+        caminho(grafo, vertice, final, listas)
     else:
        print("nao tem")
-    caminho(grafo, vertice, final, listas)
+
 
 
 def isopen(grafo, aberto):
@@ -138,8 +139,8 @@ def smallerdist(grafo, aberto, listas):
     menor = i
     j = menor + 1
     for j in range(grafo.nvert):
-        if (aberto[j] and listas.d[menor] > listas.d[i]):
-            menor = i
+        if (aberto[j] and listas.d[menor] > listas.d[j]):
+            menor = j
 
     return menor
 
