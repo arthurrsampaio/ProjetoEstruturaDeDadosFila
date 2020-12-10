@@ -87,7 +87,7 @@ def relaxa(grafo, listas, u, v):
             listas.p[v] = u
 
 
-def caminho(grafo, inicial, final, listas):
+def caminho(inicial, final, listas):
     newlist = []
     i = final
     j=0
@@ -117,7 +117,7 @@ def dijsktra(grafo, vertice, final):
             ad = ad.prox
     if(int(listas.d[final])!=50000):
         print(listas.d[final])
-        caminho(grafo, vertice, final, listas)
+        caminho(vertice, final, listas)
     else:
        print("nao tem")
 
