@@ -172,5 +172,5 @@ while (int(deleditar) != 0):
     if (int(deleditar) == 1):
         printargf(grafo)
     if (int(deleditar) == 2):
-        dijsktra(grafo, buscar(grafo, input("coloque o id")), buscar(grafo, input("destino")))
+        dijsktra(grafo, buscar(grafo, input("coloque o id: ")), buscar(grafo, input("destino: ")))
     deleditar = input("1=print,2=djiktra,0=sair: ")
