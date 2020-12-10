@@ -58,7 +58,6 @@ def criarvertice(grafo):
 
 
 def criararesta(vi, vf, grafo, peso):
-    fk = grafo.verticies
     novo = Adj(vf, peso)
     grafo.verticies[vi].nvizinhos += 1
     novo.prox = grafo.verticies[vi].cabeca
