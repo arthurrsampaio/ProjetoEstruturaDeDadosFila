@@ -33,6 +33,7 @@ class Vertice:
         self.user_timezone = arquivo['user_timezone'][x]
 
 
+#-1 -1 -1 -1 -1 -1
 class initD:
     def __init__(self, v):
         self.d = []
@@ -67,21 +68,21 @@ def criararesta(vi, vf, grafo, peso):
 
 def printargf(grafo):
     for i in range(grafo.nvert):
-        print("vertice=", i)
+        print("vertice =", i)
         fk = grafo.verticies[i]
         fk2 = grafo.verticies[i].cabeca
-        while(fk2):
+        while fk2:
             print(fk2.vertice)
-            fk2=fk2.prox
+            fk2 = fk2.prox
         print(fk.tweetId)
 
 
 def relaxa(grafo, listas, u, v):
     ad = grafo.verticies[u].cabeca
-    while (ad and ad.vertice != v):
+    while ad and ad.vertice != v:
         ad = ad.prox
-    if (ad):
-        if (listas.d[v] > listas.d[u] + ad.peso):
+    if ad:
+        if listas.d[v] > listas.d[u] + ad.peso:
             listas.d[v] = listas.d[u] + ad.peso
             listas.p[v] = u
 
@@ -89,13 +90,12 @@ def relaxa(grafo, listas, u, v):
 def caminho(inicial, final, listas):
     newlist = []
     i = final
-    j=0
-    while (i != inicial and j<10):
-        j+=1
+    j = 0
+    while i != inicial and j < 10:
+        j += 1
         newlist.append(i)
         i = listas.p[i]
-    if(j<10):
-
+    if j < 10:
         newlist.append(inicial)
         newlist.reverse()
 
@@ -107,38 +107,36 @@ def dijsktra(grafo, vertice, final):
     listas = initD(vertice)
     for i in range(grafo.nvert):
         aberto.append(1)
-    while (isopen(grafo, aberto)):
+    while isopen(grafo, aberto):
         u = smallerdist(grafo, aberto, listas)
         aberto[u] = 0
         ad = grafo.verticies[u].cabeca
-        while (ad):
+        while ad:
             relaxa(grafo, listas, u, ad.vertice)
             ad = ad.prox
-    if(int(listas.d[final])!=50000):
+    if int(listas.d[final]) != 50000:
         print(listas.d[final])
         caminho(vertice, final, listas)
     else:
-       print("nao tem")
-
+        print("nao existe caminho")
 
 
 def isopen(grafo, aberto):
     for i in range(grafo.nvert):
-        if (aberto[i] == 1):
+        if aberto[i] == 1:
             return 1
     return 0
 
 
 def smallerdist(grafo, aberto, listas):
     for i in range(grafo.nvert):
-        if (aberto[i]):
+        if aberto[i]:
             break
-    if (i == grafo.nvert):
+    if i == grafo.nvert:
         return -1
     menor = i
-    j = menor + 1
     for j in range(grafo.nvert):
-        if (aberto[j] and listas.d[menor] > listas.d[j]):
+        if aberto[j] and listas.d[menor] > listas.d[j]:
             menor = j
 
     return menor
@@ -146,7 +144,7 @@ def smallerdist(grafo, aberto, listas):
 
 def buscar(grafo, id):
     for i in range(grafo.nvert):
-        if (grafo.verticies[i].tweetId == int(id)):
+        if grafo.verticies[i].tweetId == int(id):
             return i
 
 
@@ -154,22 +152,23 @@ grafo = Grafo(10)
 criarvertice(grafo)
 
 for i in range(10):
-    x=random.randint(0, 3)
-    y= random.randint(4, 6)
-    z=random.randint(7, 9)
-    while(x==i or y==i or z==i):
+    x = random.randint(0, 3)
+    y = random.randint(4, 6)
+    z = random.randint(7, 9)
+    while x == i or y == i or z == i:
         x = random.randint(0, 3)
         y = random.randint(4, 6)
         z = random.randint(7, 9)
-    criararesta(i, x, grafo, int(grafo.verticies[i].airline_sentiment_confidence *10))
-    criararesta(i, y, grafo, int(grafo.verticies[i].airline_sentiment_confidence*10))
-    criararesta(i, z, grafo, int(grafo.verticies[i].airline_sentiment_confidence*10))
+    peso = int(grafo.verticies[i].airline_sentiment_confidence * 10)
+    criararesta(i, x, grafo, peso)
+    criararesta(i, y, grafo, peso)
+    criararesta(i, z, grafo, peso)
 
-deleditar = input("1=print,2=djiktra,0=sair: ")
+deleditar = input("1 = print, 2 = djiktra, 0 = sair: ")
 
-while (int(deleditar) != 0):
-    if (int(deleditar) == 1):
+while int(deleditar) != 0:
+    if int(deleditar) == 1:
         printargf(grafo)
-    if (int(deleditar) == 2):
+    if int(deleditar) == 2:
         dijsktra(grafo, buscar(grafo, input("coloque o id: ")), buscar(grafo, input("destino: ")))
     deleditar = input("1=print,2=djiktra,0=sair: ")
