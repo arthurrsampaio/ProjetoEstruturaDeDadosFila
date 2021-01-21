@@ -1,9 +1,6 @@
 import pandas
 import random
 
-arquivo = pandas.read_csv("tmdb_5000_movies.csv")
-
-
 class No:
     def __init__(self, arquivo, x):
         # criando um no
@@ -52,8 +49,6 @@ def push(fila,arquivo,x):
     else:
         return 0
 
-
-
 def popid (fila):
     printqueue(fila,1)
     aux=fila.inicio
@@ -89,29 +84,39 @@ def printqueue(fila,x):
         print(' ')
 
         printafila = printafila.prox
-fila = queue()
-contfila = 0
-while (fila.tamanho != 100):
-    # inserir 100 filmes aleatorios
-    x = random.randint(0, len(arquivo['budget']) - 1)
-    if(push(fila,arquivo,x)):
-
-        fila.tamanho+=1
 
 def editar(fila, antigo, novo):
     # funcao que edita o topo da pilha
     setattr(fila.inicio, antigo, novo)
 
+def inicializa_fila():
+    arquivo = pandas.read_csv("tmdb_5000_movies.csv")
 
-choice = input("pop=1  editar=2 imprimir=3 sair=0 ")
-while (int(choice) != 0):
-    if choice == '1':
-        j=popid(fila)
-    if choice == '2':
-        antigo = input("digite o antigo")
-        novo = input("digite o novo")
-        editar(fila,antigo,novo)
-    if choice == '3':
-        printqueue(fila,fila.tamanho)
+    fila = queue()
+
+    while (fila.tamanho != 100):
+        # inserir 100 filmes aleatorios
+        x = random.randint(0, len(arquivo['budget']) - 1)
+        if push(fila, arquivo, x):
+            fila.tamanho += 1
+
+    return fila
+
+
+if __name__ == "__main__":
+
+    fila = inicializa_fila()
+
 
     choice = input("pop=1  editar=2 imprimir=3 sair=0 ")
+    while (int(choice) != 0):
+        if choice == '1':
+            j = popid(fila)
+        if choice == '2':
+            antigo = input("digite o antigo")
+            novo = input("digite o novo")
+            editar(fila, antigo, novo)
+        if choice == '3':
+            printqueue(fila, fila.tamanho)
+
+        choice = input("pop=1  editar=2 imprimir=3 sair=0 ")

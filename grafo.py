@@ -1,9 +1,7 @@
 import random
 import pandas
-import copy
 
 arquivo = pandas.read_csv("Tweets.csv")
-
 
 class Adj:
     def __init__(self, v, peso):
@@ -147,28 +145,36 @@ def buscar(grafo, id):
         if grafo.verticies[i].tweetId == int(id):
             return i
 
+def inicializa_grafo():
 
-grafo = Grafo(10)
-criarvertice(grafo)
+    grafo = Grafo(10)
+    criarvertice(grafo)
 
-for i in range(10):
-    x = random.randint(0, 3)
-    y = random.randint(4, 6)
-    z = random.randint(7, 9)
-    while x == i or y == i or z == i:
+    for i in range(10):
         x = random.randint(0, 3)
         y = random.randint(4, 6)
         z = random.randint(7, 9)
-    peso = int(grafo.verticies[i].airline_sentiment_confidence * 10)
-    criararesta(i, x, grafo, peso)
-    criararesta(i, y, grafo, peso)
-    criararesta(i, z, grafo, peso)
+        while x == i or y == i or z == i:
+            x = random.randint(0, 3)
+            y = random.randint(4, 6)
+            z = random.randint(7, 9)
+        peso = int(grafo.verticies[i].airline_sentiment_confidence * 10)
+        criararesta(i, x, grafo, peso)
+        criararesta(i, y, grafo, peso)
+        criararesta(i, z, grafo, peso)
 
-deleditar = input("1 = print, 2 = djiktra, 0 = sair: ")
+    return grafo
 
-while int(deleditar) != 0:
-    if int(deleditar) == 1:
-        printargf(grafo)
-    if int(deleditar) == 2:
-        dijsktra(grafo, buscar(grafo, input("coloque o id: ")), buscar(grafo, input("destino: ")))
-    deleditar = input("1=print,2=djiktra,0=sair: ")
+
+if __name__ == '__main__':
+
+    grafo = inicializa_grafo()
+
+    deleditar = input("1 = print, 2 = djiktra, 0 = sair: ")
+
+    while int(deleditar) != 0:
+        if int(deleditar) == 1:
+            printargf(grafo)
+        if int(deleditar) == 2:
+            dijsktra(grafo, buscar(grafo, input("coloque o id: ")), buscar(grafo, input("destino: ")))
+        deleditar = input("1=print,2=djiktra,0=sair: ")

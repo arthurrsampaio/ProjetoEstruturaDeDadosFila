@@ -1,9 +1,6 @@
 import pandas
 import random
 
-arquivo = pandas.read_csv("tmdb_5000_movies.csv")
-
-
 class No:
     def __init__(self, arquivo, x):
         # criando no definindo suas variaveis
@@ -30,9 +27,6 @@ class No:
 
         self.prox = None
 
-
-
-
 class Cabeca:
     def __init__(self):
         self.prox = None
@@ -46,7 +40,7 @@ def editar(lista, id, antigo, novo):
 
     setattr(listateste, antigo, novo)
     #listates.antigo = novo
-def busca (id,lista):
+def busca(id, lista):
 
     listanova = lista.prox
     while  (listanova and listanova.id != id):
@@ -60,7 +54,7 @@ def inserir(dado, lista, x):
     # funcao que insere o no de maneira ordenada baseado na media de votos
     novono = No(dado, x)
     if lista.prox != None:
-        if busca(novono.id,lista) == 1:
+        if busca(novono.id, lista) == 1:
             return 1
     if lista.prox is None:
         lista.prox = novono
@@ -82,8 +76,6 @@ def inserir(dado, lista, x):
 
         novono.prox = previous.prox
         previous.prox = novono
-
-
 def delete(lista, id):
     # funcao para deletar um no da lista que recebe sua posição
     listateste = lista.prox
@@ -99,8 +91,6 @@ def delete(lista, id):
         listateste.prox = None
     else:
         lista.prox=lista.prox.prox
-
-
 def imprimirlista(lista, x):
     # funcaoqueimprimealista
     imprimirlist = lista.prox
@@ -130,32 +120,43 @@ def imprimirlista(lista, x):
 
         imprimirlist = imprimirlist.prox
 
+def inicializar_lista():
 
-lista1 = Cabeca()
-cont = 0
-contlista=0
-while contlista!=100:
-    # inserir 100 filmes aleatorios
-    x = random.randint(0,len(arquivo['budget']))
-    if inserir(arquivo, lista1, x) != 1:
-        contlista +=1
+    arquivo = pandas.read_csv("tmdb_5000_movies.csv")
 
-deleditar = input("Digite sua opção(0=sair, 1 = Editar, 2 = Deletar,3 = Imprimir) ")
+    lista1 = Cabeca()
 
-while int(deleditar) != 0:
-    if int(deleditar) == 1:
-        id = input("Digite o id: ")
-        cat = input("Digite a Categoria: ")
-        new = input("Digite o Novo: ")
-        editar(lista1, int(id), cat, new)
+    contlista = 0
+    while contlista != 100:
+        # inserir 100 filmes aleatorios
+        x = random.randint(0, len(arquivo['budget']))
+        if inserir(arquivo, lista1, x) != 1:
+            contlista += 1
 
-    elif int(deleditar) == 2:
-        id = input("Digite o id que deseja deletar: ")
-        delete(lista1, int(id))
-        cont += 1
+    return lista1.prox
 
+if __name__ == "__main__":
 
-    elif int(deleditar) == 3:
-        imprimirlista(lista1, 100 - cont)
+    lista1 = inicializar_lista()
+
+    cont = 0
 
     deleditar = input("Digite sua opção(0=sair, 1 = Editar, 2 = Deletar,3 = Imprimir) ")
+
+    while int(deleditar) != 0:
+        if int(deleditar) == 1:
+            id = input("Digite o id: ")
+            cat = input("Digite a Categoria: ")
+            new = input("Digite o Novo: ")
+            editar(lista1, int(id), cat, new)
+
+        elif int(deleditar) == 2:
+            id = input("Digite o id que deseja deletar: ")
+            delete(lista1, int(id))
+            cont += 1
+
+
+        elif int(deleditar) == 3:
+            imprimirlista(lista1, 100 - cont)
+
+        deleditar = input("Digite sua opção(0=sair, 1 = Editar, 2 = Deletar,3 = Imprimir) ")
